@@ -8,11 +8,12 @@ import { SWRConfig } from 'swr';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const initData = {
-  'local:/common':{loginFailureMsg:''}
+  'local:/common': { loginFailureMsg: '' },
+  'local:/auth': { loginFailMsg: '', logined: false, authToken: null },
 };
 
 root.render(
-  <SWRConfig value={{fallback:initData}}>
+  <SWRConfig value={{ fallback: initData }}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

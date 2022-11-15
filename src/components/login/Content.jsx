@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import useSWR,{useSWRConfig} from 'swr';
-import * as authAPI from '../../api/auth';
+import useAuth from '../../swr/useAuth';
 
 const Wrapper = styled.main`
   width: 100%;
@@ -66,10 +65,9 @@ const Wrapper = styled.main`
 `;
 
 const Content = (props) => {
+  const { authInfo, setAuthInfo, requestLogin, requestLogout } = useAuth();
 
-  const {data:commonData,mutate} = useSWR('local:/common');
-
-  const [loggingIn,setLogginIn] = useState(false);
+  const [loggingIn, setLogginIn] = useState(false);
 
   //const { login, changeMessage, loginFailureMsg, loggingIn } = props;
   const MAX_LEN = 20;
@@ -78,7 +76,7 @@ const Content = (props) => {
 
   const onUserIdChange = (e) => {
     e.preventDefault();
-    if(!loggingIn) {
+    if (!loggingIn) {
       const value = e.target.value;
       setUserId(value);
     }
@@ -86,21 +84,20 @@ const Content = (props) => {
 
   const onPasswordChange = (e) => {
     e.preventDefault();
-    if(!loggingIn) {
+    if (!loggingIn) {
       const value = e.target.value;
       setPassword(value);
-      if(value.length >= 5) {
-
-        commonData.loginFailureMsg = '';
-        mutate(commonData,{revalidate:false});
+      if (value.length >= 5) {
+        authInfo.loginFailMsg = '';
+        setAuthInfo(authInfo);
       }
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(!loggingIn && password.length >= 5) {
-      authAPI.login(userId,password);
+    if (!loggingIn && password.length >= 5) {
+      requestLogin(userId, password);
       setLogginIn(true);
       setPassword('');
     }
@@ -109,13 +106,14 @@ const Content = (props) => {
   return (
     <Wrapper>
       <form onSubmit={onSubmit}>
-        <input type='text' value={userId} placeholder="계정" maxLength={MAX_LEN} onChange={onUserIdChange} />
-        <input type='text' value={password} placeholder="암호" maxLength={MAX_LEN} onChange={onPasswordChange} />
-        <button className={password.length < 5 ? 'disabled':''}>
-          {loggingIn?<i className="fas fa-circle-notch" />:''}
+        <input type="text" value={userId} placeholder="계정" maxLength={MAX_LEN} onChange={onUserIdChange} />
+        <input type="text" value={password} placeholder="암호" maxLength={MAX_LEN} onChange={onPasswordChange} />
+        <button className={password.length < 5 ? 'disabled' : ''}>
+          {loggingIn ? <i className="fas fa-circle-notch" /> : ''}
           <span>로그인</span>
         </button>
-        <p>{commonData.loginFailureMsg}</p>
+        <p>{authInfo.loginFailMsg}</p>
+        <p>{JSON.stringify(authInfo)}</p>
       </form>
     </Wrapper>
   );
