@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MenuContainer } from '../containers/MenuContainer';
+import MenuContainer from '../containers/MenuContainer';
 
 const Wrapper = styled.div`
   width: 100%;

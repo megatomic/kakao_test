@@ -4,6 +4,8 @@ import './App.css';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Menu from './pages/Menu';
+import FriendsContainer from './containers/FriendsContainer';
+import ChattingContainer from './containers/ChattingContainer';
 
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/menu" element={<Menu />}>
+          <Route path="friends" element={<FriendsContainer />} />
+          <Route path="chatting" element={<ChattingContainer />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

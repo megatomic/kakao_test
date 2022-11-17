@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SWRConfig } from 'swr';
+import GlobalStyle from './styles/GlobalStyle';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -17,6 +18,7 @@ const initData = {
 root.render(
   <SWRConfig value={{ fallback: initData }}>
     <React.StrictMode>
+      <GlobalStyle />
       <App />
     </React.StrictMode>
   </SWRConfig>
