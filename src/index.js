@@ -10,6 +10,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const initData = {
   'local:/common': { loginFailureMsg: '' },
   'local:/auth': { loginFailMsg: '', logined: false, authToken: null },
+  'local:/chat': { isChattingRoomShown: false },
+  'local:/profile': { background_img_url: null },
 };
 
 root.render(

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuth from '../../swr/useAuth';
 
@@ -103,6 +104,10 @@ const Content = (props) => {
     }
   };
 
+  if (authInfo.logined == true) {
+    return <Navigate to="/menu" />;
+  }
+
   return (
     <Wrapper>
       <form onSubmit={onSubmit}>
@@ -113,7 +118,6 @@ const Content = (props) => {
           <span>로그인</span>
         </button>
         <p>{authInfo.loginFailMsg}</p>
-        <p>{JSON.stringify(authInfo)}</p>
       </form>
     </Wrapper>
   );

@@ -2,19 +2,19 @@ import useSWR, { useSWRConfig } from 'swr';
 import axios from 'axios';
 
 const AUTH_URL = 'http://localhost:3001'; //
-const swrKey = 'local:/auth';
+const swrKey = 'local:/chat';
 
-const useAuth = () => {
-  const { data: authInfo, mutate: localMutate } = useSWR(swrKey);
+const useChat = () => {
+  const { data: chatInfo, mutate: localMutate } = useSWR(swrKey);
   const { mutate: remoteMutate } = useSWRConfig();
 
-  const setAuthInfo = (value) => {
+  const setChatInfo = (value) => {
     localMutate(value, { revalidate: false });
   };
 
   return {
-    authInfo,
-    setAuthInfo,
+    chatInfo,
+    setChatInfo,
     requestLogin: (loginID, loginPW) => {
       remoteMutate(
         swrKey,
@@ -43,4 +43,4 @@ const useAuth = () => {
   };
 };
 
-export default useAuth;
+export default useChat;
