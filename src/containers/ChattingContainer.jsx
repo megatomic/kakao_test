@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.main`
+  flex-grow: 1;
+`;
 
 const ChattingContainer = (props) => {
   return (
-    <React.Fragment>
+    <Wrapper>
       <p>ChattingContainer ChattingContainer</p>
-    </React.Fragment>
+    </Wrapper>
   );
 };
 

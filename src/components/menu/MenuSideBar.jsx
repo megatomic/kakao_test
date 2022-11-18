@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
+import useAuth from '../../swr/useAuth';
+
 //import { logout } from '../../api/auth';
 
 const SideBar = styled.div`
-  position: fixed;
+  display:flex;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 100px;
   top: 0px;
   left: 0px;
-  width: 100px;
   height: 100%;
   min-height: 100vh;
   background: #dfdfdf;
@@ -44,6 +49,7 @@ const Menu = styled(NavLink)`
   width: 100%;
   &.active {
     pointer-events: none;
+    color: #000;
     & li {
       position: relative;
       & ${Notification} {
@@ -55,36 +61,64 @@ const Menu = styled(NavLink)`
   }
 `;
 
-const MenuSideBar = (props) => {
+const MenuButton = styled.button`
+  background-color: #dfdfdf;
+  &.active {
+    pointer-events: none;
+    & li{
+      & i{
+        color: #333333;
+      }
+    }
+  }
+`;
+
+
+const MenuSideBar = ({menuIndex,onSideMenuChange}) => {
+
+  const { authInfo, setAuthInfo, requestLogin, requestLogout } = useAuth();
   const showNotReadChat = () => {};
 
   const onLogoutClick = () => {
     const isLogout = window.confirm('로그아웃 하시겠습니까?');
     if (isLogout) {
       // socket.close();
-      //props.logout();
+      requestLogout();
     }
+  };
+
+  if(authInfo.logined === false) {
+    return <Navigate to="/login" />
+  }
+
+  const onFriendListClick = (e) => {
+    //e.preventDefault();
+    onSideMenuChange(0);
+  };
+
+  const onChatListClick = (e) => {
+    //e.preventDefault();
+    onSideMenuChange(1);
   };
 
   return (
     <SideBar>
-      <ul>
-        <Menu to="/menu/friends">
+        <MenuButton className={menuIndex===0?'active':'inactive'} onClick={(e)=>onFriendListClick(e)}>
           <li title="친구">
             <i className="fas fa-user" />
-            <Notification>1</Notification>
+            <Notification>4</Notification>
           </li>
-        </Menu>
-        <Menu className="active" to="/menu/chatting">
+        </MenuButton>
+        <MenuButton className={menuIndex===1?'active':'inactive'} onClick={(e)=>onChatListClick(e)}>
           <li title="채팅">
-            <i className="fas fa-comment" />
-            {props.showNotReadChat}
+            <i className="fas fa-comment" />            
           </li>
-        </Menu>
-        <li title="로그아웃" onClick={onLogoutClick}>
-          <i className="fas fa-sign-out-alt" />
-        </li>
-      </ul>
+        </MenuButton>
+        <MenuButton title="로그아웃" onClick={onLogoutClick}>
+          <li title="로그아웃">
+            <i className="fas fa-sign-out-alt" />
+          </li>
+        </MenuButton>
     </SideBar>
   );
 };

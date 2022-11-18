@@ -41,7 +41,7 @@ const ProfileContainer = (props) => {
   //   </Modal>
   // );
 
-  return <p>ProfileContainer ProfileContainer</p>;
+  return <p></p>;
 };
 
 export default ProfileContainer;

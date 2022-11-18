@@ -15,4 +15,6 @@ export const login = async (userId,password) => {
 
 export const logout = async (userId) => {
 
+    const result = await axios.post(`${BASE_URL}/logout`,{loginID:userId},config);
+    return result;
 };
