@@ -9,10 +9,14 @@ import GlobalStyle from './styles/GlobalStyle';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const initData = {
+  'local:/root': JSON.stringify({
+    user: { id: 0, name: '박윤석', statusMsg: '', friendList: [{ id: 1, name: '최준', statusMsg: '' }] },
+    profile: { id: 0, name: '박윤석', statusMsg: '', friendList: [{ id: 1, name: '최준', statusMsg: '' }] },
+    isProfileShown: false,
+  }),
   'local:/common': { loginFailureMsg: '' },
   'local:/auth': { loginFailMsg: '', logined: false, authToken: null },
   'local:/chat': { isChattingRoomShown: false },
-  'local:/profile': { background_img_url: null },
 };
 
 root.render(

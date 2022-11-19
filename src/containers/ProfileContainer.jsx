@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Modal from '../pages/Modal';
-import useProfile from '../swr/useProfile';
+import Menu from '../components/profile/Menu';
+import UserProfile from '../components/profile/UserProfile';
+import useRoot from '../swr/useRoot';
 
 const Wrapper = styled.main`
   width: 360px;
@@ -26,20 +28,46 @@ const BackgroundBase = styled.div`
   }
 `;
 
-const ProfileContainer = (props) => {
-  // const { profileInfo, setProfile, hideProfile } = useProfile();
-  // onst setBackground = profileInfo.background_img_url != null ? <img src={profileInfo.background_img_url} alt="bg_image" /> : '';
+const CancelIcon = styled.i`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 15px;
+  color: #fff;
+  z-index: 100;
+  cursor: pointer;
+`;
 
-  // return (
-  //   <Modal onClose={hideProfile}>
-  //     <Wrapper>
-  //       <BackgroundBase>{setBackground}</BackgroundBase>
-  //       <CancelIcon className="fas fa-times" onClick={hideProfile} />
-  //       <UserProfile />
-  //       <Menu isMe={isMe} isFriend={isFriend} onAddFriendClick={onAddFriendClick} onChatClick={onChatClick} />
-  //     </Wrapper>
-  //   </Modal>
-  // );
+const ProfileContainer = (props) => {
+  const { userInfo, profileInfo, setUserInfo, setProfileInfo, isProfileShown, setProfileShown } = useRoot();
+  //  onst setBackground = profileInfo.background_img_url != null ? <img src={profileInfo.background_img_url} alt="bg_image" /> : '';
+
+  const isMe = true; //userInfo.id === profileInfo.id;
+  const isFriend = false; //userInfo.friendList.find((friend) => friend.id === profileInfo.id);
+  const setBackground = '';
+
+  const onChatClick = () => {};
+
+  const onAddFriendClick = () => {};
+
+  if (isProfileShown === false) {
+    return null;
+  }
+
+  const hideProfile = () => {
+    setProfileShown(false);
+  };
+
+  return (
+    <Modal onClose={hideProfile}>
+      <Wrapper>
+        <BackgroundBase>{setBackground}</BackgroundBase>
+        <CancelIcon className="fas fa-times" onClick={hideProfile} />
+        <UserProfile />
+        <Menu isMe={isMe} isFriend={isFriend} onAddFriendClick={onAddFriendClick} onChatClick={onChatClick} />
+      </Wrapper>
+    </Modal>
+  );
 
   return <p></p>;
 };

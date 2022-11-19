@@ -1,28 +1,33 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/friends/Header';
 import Content from '../components/friends/Content';
+import useRoot from '../swr/useRoot';
 
 const Wrapper = styled.main`
   flex-grow: 1;
   width: 100%;
   min-height: 100vh;
-  display:flex;
+  display: flex;
   flex-direction: column;
 `;
 
 const FriendsContainer = (props) => {
-
+  const { isProfileShown, setProfileShown } = useRoot();
   const [searchText, setSearchText] = useState('');
 
   const changeSearch = (param) => {
     setSearchText(param);
   };
 
+  const showProfile = (profile) => {
+    setProfileShown(true);
+  };
+
   return (
     <Wrapper>
       <Header changeSearch={changeSearch} />
-      <Content search={searchText} />
+      <Content search={searchText} showProfile={showProfile} />
     </Wrapper>
   );
 };
